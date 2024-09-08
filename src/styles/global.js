@@ -16,6 +16,10 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
         border: none;
     }
+
+    p {
+        text-align: center;
+    }
 `;
 
 export default GlobalStyle;

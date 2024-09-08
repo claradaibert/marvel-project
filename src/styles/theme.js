@@ -5,6 +5,7 @@ const theme = {
       DARK: "#151515",
       MEDIUM: "#202020",
       LIGHT: "#fff",
+      PRIMARY_PASTEL: "#fcecec",
     },
     TYPOGRAPHY: {
       DARK: "#151515",
