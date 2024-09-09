@@ -20,6 +20,7 @@ export const Container = styled.div`
 
   @media screen and (max-width: 500px) {
     grid-template-columns: 1fr;
+    padding: 0 1rem;
   }
 
   li {
