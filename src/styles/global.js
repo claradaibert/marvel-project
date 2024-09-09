@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
         max-width: 100vw;
     }
 
+    li {
+        list-style: none;
+    }
+
     button {
         cursor: pointer;
         border: none;
