@@ -31,6 +31,8 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      border: none;
+      background-color: transparent;
       height: 16rem;
       width: 100%;
       border-bottom: 2px solid ${({ theme }) => theme.COLORS.BRAND.PRIMARY};
@@ -44,7 +46,7 @@ export const Container = styled.div`
 
         &:hover {
           height: 110%;
-          width: 110%;
+          width: 150%;
         }
       }
     }
@@ -54,6 +56,7 @@ export const Container = styled.div`
       width: 100%;
       justify-content: space-between;
       padding: 1.5rem 0;
+      align-items: center;
 
       button {
         display: flex;
