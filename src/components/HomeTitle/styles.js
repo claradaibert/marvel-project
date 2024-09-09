@@ -20,7 +20,7 @@ export const HomeTitleTypography = styled(Typography.TitleDark)`
   }
 `;
 
-export const HomeSubtitle = styled(Typography.SubtitleLight)`
+export const HomeSubtitle = styled(Typography.BodyLight)`
   @media screen and (max-width: 400px) {
     font-size: ${({ theme }) => theme.FONT.SIZE.US}px;
   }
