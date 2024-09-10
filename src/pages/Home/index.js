@@ -23,6 +23,7 @@ function Home() {
 
   // Local states
   const [loading, setLoading] = useState(false);
+  const [moreLoading, setMoreLoading] = useState(false);
   const [search, setSearch] = useState(characterSearch);
   const [characterList, setCharacterList] = useState([]);
   const [charactersTotal, setCharactersTotal] = useState(0);
@@ -31,9 +32,18 @@ function Home() {
 
   const [searchValue] = useDebounce(search, 1000);
 
+  const handleSeeMore = async () => {
+    setMoreLoading(true);
+    await getCharacterList(searchValue, characterList?.length, characterOrder)
+      .then((data) => {
+        setCharacterList((prev) => prev.concat(data.list));
+      })
+      .finally(() => setMoreLoading(false));
+  };
+
   const handleSearch = useCallback(async () => {
     setLoading(true);
-    await getCharacterList(searchValue, 0, characterOrder)
+    await getCharacterList(searchValue, characterList?.length, characterOrder)
       .then((data) => {
         setCharacterList(data?.list);
         setCharactersTotal(data?.total);
@@ -42,6 +52,7 @@ function Home() {
         setLoading(false);
         dispatch(SET_CHARACTER_SEARCH(undefined));
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue, characterOrder, dispatch]);
 
   useEffect(() => {
@@ -68,6 +79,14 @@ function Home() {
           showFavorites={showFavorites}
         />
       )}
+      <button
+        className="moreLoadingButton"
+        type="button"
+        disabled={moreLoading}
+        onClick={() => handleSeeMore()}
+      >
+        {moreLoading ? <Loader padding={"0rem"} size={"1rem"} /> : "Ver mais"}
+      </button>
     </Container>
   );
 }
