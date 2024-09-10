@@ -14,7 +14,7 @@ export const getCharacterList = async (search, page, orderByName) => {
 
     const responseObject = {
       list: response?.data?.data?.results,
-      total: response?.data?.data?.total,
+      total: response?.data?.data?.count,
     };
 
     return responseObject;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDebounce } from "use-debounce";
 
 // Style import
 import { Container } from "./styles";
@@ -14,17 +15,51 @@ import ListFilters from "../../components/ListFilters";
 import { getCharacterList } from "../../controllers/Characters";
 
 function Home() {
+  // Local states
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [characterList, setCharacterList] = useState([]);
   const [charactersTotal, setCharactersTotal] = useState(0);
   const [showFavorites, setShowFavorites] = useState(false);
 
+  const [searchValue] = useDebounce(search, 1000);
+
+  useEffect(() => {
+    const handleSearch = async () => {
+      setLoading(true);
+
+      if (searchValue.length === 0) {
+        await getCharacterList(undefined, 1)
+          .then((data) => {
+            setCharacterList(data.list);
+            setCharactersTotal(data.total);
+          })
+          .finally(() => setLoading(false));
+
+        return;
+      }
+
+      await getCharacterList(searchValue, 1)
+        .then((data) => {
+          setCharacterList(data.list);
+          setCharactersTotal(data.total);
+        })
+        .finally(() => setLoading(false));
+      getCharacterList();
+    };
+
+    handleSearch();
+  }, [searchValue]);
+
   useEffect(() => {
     const getList = async () => {
-      await getCharacterList(undefined, 1).then((data) => {
-        setCharacterList(data.list);
-        setCharactersTotal(data.total);
-      });
+      setLoading(true);
+      await getCharacterList(undefined, 1)
+        .then((data) => {
+          setCharacterList(data.list);
+          setCharactersTotal(data.total);
+        })
+        .finally(() => setLoading(false));
     };
 
     getList();
@@ -35,8 +70,23 @@ function Home() {
       <HomeHeader />
       <HomeTitle />
       <Input type="primary" value={search} setValue={setSearch} />
-      <ListFilters characterTotals={charactersTotal} setShowFavorites={setShowFavorites}/>
-      <CharactersList characters={characterList} showFavorites={showFavorites}/>
+      <ListFilters
+        characterTotals={charactersTotal}
+        setCharacterList={setCharacterList}
+        setCharactersTotal={setCharactersTotal}
+        setLoading={setLoading}
+        setShowFavorites={setShowFavorites}
+        searchValue={searchValue}
+        loading={loading}
+      />
+      {loading ? (
+        <>Loading ...</>
+      ) : (
+        <CharactersList
+          characters={characterList}
+          showFavorites={showFavorites}
+        />
+      )}
     </Container>
   );
 }
