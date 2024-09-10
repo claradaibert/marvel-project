@@ -3,12 +3,13 @@ import { toast } from "react-toastify";
 import { api } from "../../services";
 import { reqDefaultParams } from "../../constants";
 
-export const getCharacterList = async (search, page) => {
+export const getCharacterList = async (search, page, orderByName) => {
   try {
     const requestSearchValue = search ? `nameStartsWith=${search}&&` : "";
+    const orderBy = orderByName ? 'name' : 'modified';
     const offset = page * 20;
     const response = await api.get(
-      `/characters?${requestSearchValue}offset=${offset}&${reqDefaultParams}`
+      `/characters?${requestSearchValue}&orderBy=${orderBy}&offset=${offset}&${reqDefaultParams}`
     );
 
     const responseObject = {
