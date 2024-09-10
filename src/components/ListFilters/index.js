@@ -7,7 +7,7 @@ import { Container, TotalsTypography } from "./styles";
 import FilterByName from "../FilterByName";
 import FilterByFavorites from "../FilterByFavorites";
 
-function ListFilters({ characterTotals, setCharacterList }) {
+function ListFilters({ characterTotals, setCharacterList, setShowFavorites }) {
 
   return (
     <Container>
@@ -16,7 +16,7 @@ function ListFilters({ characterTotals, setCharacterList }) {
       </TotalsTypography>
       <div className="filtersContainer">
         <FilterByName setCharacterList={setCharacterList} />
-        <FilterByFavorites />
+        <FilterByFavorites setShowFavorites={setShowFavorites} />
       </div>
     </Container>
   );

@@ -17,6 +17,7 @@ function Home() {
   const [search, setSearch] = useState("");
   const [characterList, setCharacterList] = useState([]);
   const [charactersTotal, setCharactersTotal] = useState(0);
+  const [showFavorites, setShowFavorites] = useState(false);
 
   useEffect(() => {
     const getList = async () => {
@@ -34,8 +35,8 @@ function Home() {
       <HomeHeader />
       <HomeTitle />
       <Input type="primary" value={search} setValue={setSearch} />
-      <ListFilters characterTotals={charactersTotal} />
-      <CharactersList characters={characterList} />
+      <ListFilters characterTotals={charactersTotal} setShowFavorites={setShowFavorites}/>
+      <CharactersList characters={characterList} showFavorites={showFavorites}/>
     </Container>
   );
 }

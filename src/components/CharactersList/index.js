@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 // Style import
 import { Container } from "./styles";
@@ -6,10 +7,14 @@ import { Container } from "./styles";
 // Component import
 import ListItem from "../ListItem";
 
-function CharactersList({ characters }) {
+function CharactersList({ characters, showFavorites }) {
+  const favoriteCharacters = useSelector((state) => state.favoriteCharacters);
+
+  const chosenList = showFavorites ? favoriteCharacters : characters;
+
   return (
     <Container>
-      {characters?.map((character) => (
+      {chosenList?.map((character) => (
         <ListItem character={character} />
       ))}
     </Container>
