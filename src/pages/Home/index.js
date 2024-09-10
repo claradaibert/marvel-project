@@ -43,7 +43,8 @@ function Home() {
 
   const handleSearch = useCallback(async () => {
     setLoading(true);
-    await getCharacterList(searchValue, characterList?.length, characterOrder)
+
+    await getCharacterList(searchValue, 0, characterOrder)
       .then((data) => {
         setCharacterList(data?.list);
         setCharactersTotal(data?.total);
@@ -79,14 +80,16 @@ function Home() {
           showFavorites={showFavorites}
         />
       )}
-      <button
-        className="moreLoadingButton"
-        type="button"
-        disabled={moreLoading}
-        onClick={() => handleSeeMore()}
-      >
-        {moreLoading ? <Loader padding={"0rem"} size={"1rem"} /> : "Ver mais"}
-      </button>
+      {!showFavorites && characterList?.length < charactersTotal && (
+        <button
+          className="moreLoadingButton"
+          type="button"
+          disabled={moreLoading}
+          onClick={() => handleSeeMore()}
+        >
+          {moreLoading ? <Loader padding={"0rem"} size={"1rem"} /> : "Ver mais"}
+        </button>
+      )}
     </Container>
   );
 }

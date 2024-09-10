@@ -17,6 +17,8 @@ export const InputContainer = styled.div`
 
     .iconContainer {
       position: relative;
+      width: 0;
+      overflow-x: visible;
       left: 2.5rem;
       z-index: 20000;
 

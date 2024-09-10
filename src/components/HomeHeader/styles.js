@@ -25,6 +25,7 @@ export const HeaderSubtitle = styled(Typography.SubtitleDark)`
   right: 110px;
   bottom: 25px;
   width: 0;
+  overflow-x: visible;
   white-space: nowrap;
 
   @media screen and (max-width: 420px) {
