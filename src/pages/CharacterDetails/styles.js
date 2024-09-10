@@ -11,7 +11,7 @@ export const Container = styled.div`
 
   .backgroundName {
     position: fixed;
-    margin-top: 5rem;
+    margin-top: 8rem;
     z-index: 0;
     max-width: 80vw;
     text-align: right;
