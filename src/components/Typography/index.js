@@ -40,6 +40,12 @@ const SmallBodyPrimary = styled.p`
   color: ${({ theme }) => theme.COLORS.BRAND.PRIMARY};
 `;
 
+const PageTitle = styled.p`
+  font-size: ${({ theme }) => theme.FONT.SIZE.LG}px;
+  font-weight: ${({ theme }) => theme.FONT.WEIGHT.G};
+  color: ${({ theme }) => theme.COLORS.TYPOGRAPHY.DARK};
+`;
+
 const Typography = {
   TitleDark,
   SubtitleDark,
@@ -47,6 +53,7 @@ const Typography = {
   BodyDark,
   BodyBold,
   SmallBodyPrimary,
+  PageTitle,
 };
 
 export default Typography;
