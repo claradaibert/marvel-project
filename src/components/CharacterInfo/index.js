@@ -14,7 +14,7 @@ import CharacterInfoTitle from "../CharacterInfoTitle";
 // Asset import
 import StarIcon from "../../assets/avaliacao_off.svg";
 
-function CharacterInfo({ character }) {
+function CharacterInfo({ character, lastIssueDate }) {
   return (
     <Container>
       <CharacterInfoTitle character={character} />
@@ -35,6 +35,7 @@ function CharacterInfo({ character }) {
       </div>
       <div className="characterRating">
         <MediaInfoTitleTypography>Último quadrinho: </MediaInfoTitleTypography>
+        <CharacterDescription>{lastIssueDate}</CharacterDescription>
       </div>
     </Container>
   );

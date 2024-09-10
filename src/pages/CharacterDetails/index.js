@@ -12,7 +12,10 @@ import CharacterComics from "../../components/CharacterComics";
 
 // Controller import
 import { getCharacter } from "../../controllers/Characters";
-import { getCharacterComics } from "../../controllers/Comics";
+import {
+  getCharacterComics,
+  getLastModifiedDate,
+} from "../../controllers/Comics";
 
 function CharacterDetails() {
   const location = useLocation().pathname;
@@ -20,6 +23,7 @@ function CharacterDetails() {
   const [search, setSearch] = useState("");
   const [character, setCharacter] = useState({});
   const [characterComics, setCharacterComics] = useState([]);
+  const [lastIssueDate, setLastIssueDate] = useState("");
 
   const [searchValue] = useDebounce(search, 1000);
   const itemId = location.split("/")?.[2];
@@ -29,6 +33,20 @@ function CharacterDetails() {
       await getCharacter(itemId).then((data) => setCharacter(data));
 
       await getCharacterComics(itemId).then((data) => setCharacterComics(data));
+
+      await getLastModifiedDate(itemId).then((data) => {
+        const extractedDate = data?.split("T")?.[0];
+
+        if (extractedDate) {
+          const splitExtractedDate = extractedDate?.split("-");
+          const year = splitExtractedDate?.[0];
+          const day = splitExtractedDate?.[2];
+          const formatter = new Intl.DateTimeFormat("pt", { month: "short" });
+          const month = formatter.format(new Date(extractedDate));
+          setLastIssueDate(`${day} ${month} ${year}`);
+          return;
+        }
+      });
     };
 
     getCharacterInfo();
@@ -39,7 +57,7 @@ function CharacterDetails() {
       <div className="backgroundName">{character?.name?.toUpperCase()}</div>
       <div className="mainContentContainer">
         <DetailsHeader search={search} setSearch={setSearch} />
-        <CharacterInfo character={character} />
+        <CharacterInfo character={character} lastIssueDate={lastIssueDate} />
         <CharacterComics comics={characterComics} />
       </div>
     </Container>
