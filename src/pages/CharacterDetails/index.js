@@ -15,10 +15,12 @@ import {
   getCharacterComics,
   getLastModifiedDate,
 } from "../../controllers/Comics";
+import Loader from "../../components/Loader";
 
 function CharacterDetails() {
   const location = useLocation().pathname;
 
+  const [loading, setLoading] = useState(false);
   const [character, setCharacter] = useState({});
   const [characterComics, setCharacterComics] = useState([]);
   const [lastIssueDate, setLastIssueDate] = useState("");
@@ -27,23 +29,31 @@ function CharacterDetails() {
 
   useEffect(() => {
     const getCharacterInfo = async () => {
-      await getCharacter(itemId).then((data) => setCharacter(data));
+      setLoading(true);
 
-      await getCharacterComics(itemId).then((data) => setCharacterComics(data));
+      try {
+        await getCharacter(itemId).then((data) => setCharacter(data));
 
-      await getLastModifiedDate(itemId).then((data) => {
-        const extractedDate = data?.split("T")?.[0];
+        await getCharacterComics(itemId).then((data) =>
+          setCharacterComics(data)
+        );
 
-        if (extractedDate) {
-          const splitExtractedDate = extractedDate?.split("-");
-          const year = splitExtractedDate?.[0];
-          const day = splitExtractedDate?.[2];
-          const formatter = new Intl.DateTimeFormat("pt", { month: "short" });
-          const month = formatter.format(new Date(extractedDate));
-          setLastIssueDate(`${day} ${month} ${year}`);
-          return;
-        }
-      });
+        await getLastModifiedDate(itemId).then((data) => {
+          const extractedDate = data?.split("T")?.[0];
+
+          if (extractedDate) {
+            const splitExtractedDate = extractedDate?.split("-");
+            const year = splitExtractedDate?.[0];
+            const day = splitExtractedDate?.[2];
+            const formatter = new Intl.DateTimeFormat("pt", { month: "short" });
+            const month = formatter.format(new Date(extractedDate));
+            setLastIssueDate(`${day} ${month} ${year}`);
+            return;
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
     };
 
     getCharacterInfo();
@@ -54,8 +64,17 @@ function CharacterDetails() {
       <div className="backgroundName">{character?.name?.toUpperCase()}</div>
       <div className="mainContentContainer">
         <DetailsHeader />
-        <CharacterInfo character={character} lastIssueDate={lastIssueDate} />
-        <CharacterComics comics={characterComics} />
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <CharacterInfo
+              character={character}
+              lastIssueDate={lastIssueDate}
+            />
+            <CharacterComics comics={characterComics} />
+          </>
+        )}
       </div>
     </Container>
   );

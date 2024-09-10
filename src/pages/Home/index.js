@@ -14,7 +14,8 @@ import ListFilters from "../../components/ListFilters";
 
 // Controller import
 import { getCharacterList } from "../../controllers/Characters";
-import { CLEAR_CHARACTER_SEARCH } from "../../store/characters/reducer";
+import { SET_CHARACTER_SEARCH } from "../../store/characters/reducer";
+import Loader from "../../components/Loader";
 
 function Home() {
   const dispatch = useDispatch();
@@ -37,8 +38,11 @@ function Home() {
         setCharacterList(data?.list);
         setCharactersTotal(data?.total);
       })
-      .finally(() => setLoading(false));
-  }, [searchValue, characterOrder]);
+      .finally(() => {
+        setLoading(false);
+        dispatch(SET_CHARACTER_SEARCH(undefined));
+      });
+  }, [searchValue, characterOrder, dispatch]);
 
   useEffect(() => {
     handleSearch();
@@ -57,7 +61,7 @@ function Home() {
         setCharacterOrder={setCharacterOrder}
       />
       {loading ? (
-        <>Loading ...</>
+        <Loader />
       ) : (
         <CharactersList
           characters={characterList}
