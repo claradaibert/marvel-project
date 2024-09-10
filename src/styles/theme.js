@@ -13,6 +13,10 @@ const theme = {
       LIGHT: "#7c7771",
       WHITE: "#fff",
     },
+    CHARACTER: {
+      BACKGROUND: '#e8f6e7',
+      FONT: '#f7fcf5',
+    }
   },
   FONT: {
     WEIGHT: {

@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
         font-optical-sizing: auto;
         font-style: normal;
         max-width: 100vw;
+        overflow-x: hidden;
     }
 
     li {
