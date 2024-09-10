@@ -18,6 +18,7 @@ function Home() {
   // Local states
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [initialCharactersData, setInitialCharactersData] = useState({});
   const [characterList, setCharacterList] = useState([]);
   const [charactersTotal, setCharactersTotal] = useState(0);
   const [showFavorites, setShowFavorites] = useState(false);
@@ -29,17 +30,13 @@ function Home() {
       setLoading(true);
 
       if (searchValue.length === 0) {
-        await getCharacterList(undefined, 1)
-          .then((data) => {
-            setCharacterList(data.list);
-            setCharactersTotal(data.total);
-          })
-          .finally(() => setLoading(false));
-
+        setCharacterList(initialCharactersData?.list);
+        setCharactersTotal(initialCharactersData?.total);
+        setLoading(false);
         return;
       }
 
-      await getCharacterList(searchValue, 1)
+      await getCharacterList(searchValue, 0)
         .then((data) => {
           setCharacterList(data.list);
           setCharactersTotal(data.total);
@@ -49,7 +46,7 @@ function Home() {
     };
 
     handleSearch();
-  }, [searchValue]);
+  }, [searchValue, initialCharactersData]);
 
   useEffect(() => {
     const getList = async () => {
@@ -57,6 +54,7 @@ function Home() {
       await getCharacterList(undefined, 1)
         .then((data) => {
           setCharacterList(data.list);
+          setInitialCharactersData(data);
           setCharactersTotal(data.total);
         })
         .finally(() => setLoading(false));
