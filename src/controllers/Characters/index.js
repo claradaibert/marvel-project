@@ -3,10 +3,9 @@ import { toast } from "react-toastify";
 import { api } from "../../services";
 import { reqDefaultParams } from "../../constants";
 
-export const getCharacterList = async (search, page, orderByName) => {
+export const getCharacterList = async (search, offset, orderByName) => {
   try {
     const requestSearchValue = search ? `nameStartsWith=${search}` : "";
-    const offset = page * 20;
     const response = await api.get(
       `/characters?${requestSearchValue}&orderBy=${orderByName}&offset=${offset}&${reqDefaultParams}`
     );
