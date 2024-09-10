@@ -6,6 +6,10 @@ export const InputContainer = styled.div`
   width: 100%;
   max-width: ${(props) => (props.maxWidth ? props.maxWidth : "60vw")};
 
+  @media screen and (max-width: 900px) {
+    max-width: 80vw;
+  }
+
   .inputAndLabelContainer {
     width: 100%;
     display: flex;

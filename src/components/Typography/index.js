@@ -16,6 +16,10 @@ const BodyLight = styled.p`
   font-size: ${({ theme }) => theme.FONT.SIZE.XXS}px;
   font-weight: ${({ theme }) => theme.FONT.WEIGHT.M};
   color: ${({ theme }) => theme.COLORS.TYPOGRAPHY.LIGHT};
+
+  @media screen and (max-width: 400px) {
+    font-size: ${({ theme }) => theme.FONT.SIZE.US}px;
+  }
 `;
 
 const BodyDark = styled.p`
@@ -30,12 +34,19 @@ const BodyBold = styled.p`
   color: ${({ theme }) => theme.COLORS.TYPOGRAPHY.DARK};
 `;
 
+const SmallBodyPrimary = styled.p`
+  font-size: ${({ theme }) => theme.FONT.SIZE.US}px;
+  font-weight: ${({ theme }) => theme.FONT.WEIGHT.M};
+  color: ${({ theme }) => theme.COLORS.BRAND.PRIMARY};
+`;
+
 const Typography = {
   TitleDark,
   SubtitleDark,
   BodyLight,
   BodyDark,
   BodyBold,
+  SmallBodyPrimary,
 };
 
 export default Typography;
