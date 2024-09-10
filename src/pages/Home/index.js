@@ -8,6 +8,7 @@ import HomeHeader from "../../components/HomeHeader";
 import HomeTitle from "../../components/HomeTitle";
 import Input from "../../components/Input";
 import CharactersList from "../../components/CharactersList";
+import ListFilters from "../../components/ListFilters";
 
 // Controller import
 import { getCharacterList } from "../../controllers/Characters";
@@ -33,6 +34,7 @@ function Home() {
       <HomeHeader />
       <HomeTitle />
       <Input type="primary" value={search} setValue={setSearch} />
+      <ListFilters characterTotals={charactersTotal} />
       <CharactersList characters={characterList} />
     </Container>
   );
