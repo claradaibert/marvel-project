@@ -28,6 +28,7 @@ function CharacterDetails() {
   const itemId = location.split("/")?.[2];
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     const getCharacterInfo = async () => {
       setLoading(true);
 
