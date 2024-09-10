@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
   favoriteCharacters: [],
+  characterSearch: undefined,
 };
 
 const charSlice = createSlice({
@@ -22,6 +23,12 @@ const charSlice = createSlice({
       );
       state.favoriteCharacters = filteredCharList;
     },
+    SET_CHARACTER_SEARCH: (state, action) => {
+      state.characterSearch = action.payload;
+    },
+    CLEAR_CHARACTER_SEARCH: (state) => {
+      state.characterSearch = undefined;
+    },
     CLEAR_CHARACTERS_LIST: (state) => {
       state.favoriteCharacters = [];
     },
@@ -34,4 +41,6 @@ export const {
   ADD_CHARACTER_TO_FAVORITES,
   REMOVE_CHARACTER_FROM_FAVORITES,
   CLEAR_CHARACTERS_LIST,
+  SET_CHARACTER_SEARCH,
+  CLEAR_CHARACTER_SEARCH,
 } = charSlice.actions;

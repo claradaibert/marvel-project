@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDebounce } from "use-debounce";
+import { useSelector, useDispatch } from "react-redux";
 
 // Style import
 import { Container } from "./styles";
@@ -13,55 +14,35 @@ import ListFilters from "../../components/ListFilters";
 
 // Controller import
 import { getCharacterList } from "../../controllers/Characters";
+import { CLEAR_CHARACTER_SEARCH } from "../../store/characters/reducer";
 
 function Home() {
+  const dispatch = useDispatch();
+  const characterSearch = useSelector((state) => state.characterSearch);
+
   // Local states
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState("");
-  const [initialCharactersData, setInitialCharactersData] = useState({});
+  const [search, setSearch] = useState(characterSearch);
   const [characterList, setCharacterList] = useState([]);
   const [charactersTotal, setCharactersTotal] = useState(0);
   const [showFavorites, setShowFavorites] = useState(false);
+  const [characterOrder, setCharacterOrder] = useState("modified");
 
   const [searchValue] = useDebounce(search, 1000);
 
+  const handleSearch = useCallback(async () => {
+    setLoading(true);
+    await getCharacterList(searchValue, 0, characterOrder)
+      .then((data) => {
+        setCharacterList(data?.list);
+        setCharactersTotal(data?.total);
+      })
+      .finally(() => setLoading(false));
+  }, [searchValue, characterOrder]);
+
   useEffect(() => {
-    const handleSearch = async () => {
-      setLoading(true);
-
-      if (searchValue.length === 0) {
-        setCharacterList(initialCharactersData?.list);
-        setCharactersTotal(initialCharactersData?.total);
-        setLoading(false);
-        return;
-      }
-
-      await getCharacterList(searchValue, 0)
-        .then((data) => {
-          setCharacterList(data.list);
-          setCharactersTotal(data.total);
-        })
-        .finally(() => setLoading(false));
-      getCharacterList();
-    };
-
     handleSearch();
-  }, [searchValue, initialCharactersData]);
-
-  useEffect(() => {
-    const getList = async () => {
-      setLoading(true);
-      await getCharacterList(undefined, 1)
-        .then((data) => {
-          setCharacterList(data.list);
-          setInitialCharactersData(data);
-          setCharactersTotal(data.total);
-        })
-        .finally(() => setLoading(false));
-    };
-
-    getList();
-  }, []);
+  }, [handleSearch]);
 
   return (
     <Container>
@@ -70,12 +51,10 @@ function Home() {
       <Input type="primary" value={search} setValue={setSearch} />
       <ListFilters
         characterTotals={charactersTotal}
-        setCharacterList={setCharacterList}
-        setCharactersTotal={setCharactersTotal}
-        setLoading={setLoading}
         setShowFavorites={setShowFavorites}
-        searchValue={searchValue}
         loading={loading}
+        characterOrder={characterOrder}
+        setCharacterOrder={setCharacterOrder}
       />
       {loading ? (
         <>Loading ...</>

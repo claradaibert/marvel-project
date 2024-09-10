@@ -9,12 +9,10 @@ import FilterByFavorites from "../FilterByFavorites";
 
 function ListFilters({
   characterTotals,
-  setCharacterList,
-  setCharactersTotal,
   setShowFavorites,
-  setLoading,
-  searchValue,
   loading,
+  characterOrder,
+  setCharacterOrder,
 }) {
   return (
     <Container>
@@ -23,11 +21,9 @@ function ListFilters({
       </TotalsTypography>
       <div className="filtersContainer">
         <FilterByName
-          setCharacterList={setCharacterList}
-          searchValue={searchValue}
-          setCharactersTotal={setCharactersTotal}
-          setLoading={setLoading}
           loading={loading}
+          characterOrder={characterOrder}
+          setCharacterOrder={setCharacterOrder}
         />
         <FilterByFavorites setShowFavorites={setShowFavorites} />
       </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useDebounce } from "use-debounce";
 
 // Style import
 import { Container } from "./styles";
@@ -20,12 +19,10 @@ import {
 function CharacterDetails() {
   const location = useLocation().pathname;
 
-  const [search, setSearch] = useState("");
   const [character, setCharacter] = useState({});
   const [characterComics, setCharacterComics] = useState([]);
   const [lastIssueDate, setLastIssueDate] = useState("");
 
-  const [searchValue] = useDebounce(search, 1000);
   const itemId = location.split("/")?.[2];
 
   useEffect(() => {
@@ -56,7 +53,7 @@ function CharacterDetails() {
     <Container>
       <div className="backgroundName">{character?.name?.toUpperCase()}</div>
       <div className="mainContentContainer">
-        <DetailsHeader search={search} setSearch={setSearch} />
+        <DetailsHeader />
         <CharacterInfo character={character} lastIssueDate={lastIssueDate} />
         <CharacterComics comics={characterComics} />
       </div>

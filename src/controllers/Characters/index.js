@@ -6,10 +6,9 @@ import { reqDefaultParams } from "../../constants";
 export const getCharacterList = async (search, page, orderByName) => {
   try {
     const requestSearchValue = search ? `nameStartsWith=${search}` : "";
-    const orderBy = orderByName ? "name" : "modified";
     const offset = page * 20;
     const response = await api.get(
-      `/characters?${requestSearchValue}&orderBy=${orderBy}&offset=${offset}&${reqDefaultParams}`
+      `/characters?${requestSearchValue}&orderBy=${orderByName}&offset=${offset}&${reqDefaultParams}`
     );
 
     const responseObject = {
