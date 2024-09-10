@@ -16,11 +16,11 @@ export const InputContainer = styled.div`
     align-items: center;
 
     .iconContainer {
-      width: 0;
       position: relative;
-      left: 1.5rem;
+      left: 2.5rem;
+      z-index: 20000;
 
-      img {
+      img.iconContainerImg {
         height: 1.2rem;
       }
     }

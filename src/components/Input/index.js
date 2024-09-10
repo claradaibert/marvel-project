@@ -10,7 +10,11 @@ function Input({ maxWidth, type, value, setValue }) {
     <InputContainer maxWidth={maxWidth} type={type}>
       <div className="inputAndLabelContainer">
         <div className="iconContainer">
-          <img src={SearchIcon} alt="search icon" />
+          <img
+            className="iconContainerImg"
+            src={SearchIcon}
+            alt="search icon"
+          />
         </div>
         <input
           placeholder="Procure por heróis"
