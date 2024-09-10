@@ -1,4 +1,5 @@
 import React from "react";
+import { redirect, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // Style import
@@ -14,20 +15,16 @@ import {
   REMOVE_CHARACTER_FROM_FAVORITES,
 } from "../../store/characters/reducer";
 
+// Util import
+import { isCharacterFavorited } from "../../utils/isCharacterFavorited";
+
 function ListItem({ character }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const favoriteCharacters = useSelector((state) => state.favoriteCharacters);
 
-  const isCharacterFavorited = (character) => {
-    const isCharacterAlreadyFavorited = favoriteCharacters.some(
-      (char) => char.name === character.name
-    );
-
-    return isCharacterAlreadyFavorited;
-  };
-
   const handleFavoriteButton = (character) => {
-    if (isCharacterFavorited(character)) {
+    if (isCharacterFavorited(character, favoriteCharacters)) {
       dispatch(REMOVE_CHARACTER_FROM_FAVORITES(character));
       return;
     }
@@ -36,7 +33,11 @@ function ListItem({ character }) {
 
   return (
     <li key={character?.id}>
-      <button className="imgContainer" type="button">
+      <button
+        className="imgContainer"
+        type="button"
+        onClick={() => navigate(`/characterDetails/${character.id}`)}
+      >
         <img
           alt={`${character?.name} photo`}
           aria-hidden
@@ -44,12 +45,15 @@ function ListItem({ character }) {
         />
       </button>
       <div className="nameContainer">
-        <button type="button">
+        <button
+          type="button"
+          onClick={() => navigate(`/characterDetails/${character.id}`)}
+        >
           <CharName>{character?.name}</CharName>
         </button>
         <button type="button" onClick={() => handleFavoriteButton(character)}>
           <img
-            src={isCharacterFavorited(character) ? HeartFilled : HeartOutline}
+            src={isCharacterFavorited(character, favoriteCharacters) ? HeartFilled : HeartOutline}
             alt="heart icon"
           />
         </button>
