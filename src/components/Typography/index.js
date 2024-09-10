@@ -43,7 +43,7 @@ const SmallBodyPrimary = styled.p`
 const PageTitle = styled.p`
   font-size: ${({ theme }) => theme.FONT.SIZE.LG}px;
   font-weight: ${({ theme }) => theme.FONT.WEIGHT.G};
-  color: ${({ theme }) => theme.COLORS.TYPOGRAPHY.DARK};
+  color: ${({ theme }) => theme.COLORS.TYPOGRAPHY.MEDIUM};
 `;
 
 const Typography = {

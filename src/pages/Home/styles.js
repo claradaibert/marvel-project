@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import Typography from "../../components/Typography";
-
 export const Container = styled.div`
   width: 100%;
   display: flex;
